@@ -12,11 +12,16 @@ class GroceryList extends StatefulWidget {
 }
 
 class _GroceryListState extends State<GroceryList> {
-  void onCreate() {
-    void theValue = Navigator.of(context).push(
-      MaterialPageRoute(builder:
-        (context) => const NewItem()),
-      );
+  Future<void> onCreate() async {
+    final newGrocery = await Navigator.of(
+      context,
+    ).push<Grocery>(MaterialPageRoute(builder: (context) => const NewItem()));
+
+    if (newGrocery != null) {
+      setState(() {
+        dummyGroceryItems.add(newGrocery);
+      });
+    }
   }
 
   @override
